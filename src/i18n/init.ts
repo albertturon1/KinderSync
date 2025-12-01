@@ -10,7 +10,6 @@ type Init18n = {
 };
 
 export const init18n = ({ resources, fallbackLng }: Init18n) => {
-  // eslint-disable-next-line import/no-named-as-default-member
   return i18n
     .use(languageDetector)
     .use(initReactI18next)

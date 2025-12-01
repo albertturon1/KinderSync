@@ -150,10 +150,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 
-  sm: { minHeight: 44, paddingVertical: spacing.sm, paddingHorizontal: spacing.md },
-  default: { minHeight: 48, paddingVertical: spacing.md, paddingHorizontal: spacing.md },
+  /* eslint-disable react-native/no-unused-styles */
+  sm: { minHeight: 44, paddingVertical: spacing.xs, paddingHorizontal: spacing.sm },
+  default: { minHeight: 48, paddingVertical: spacing.sm, paddingHorizontal: spacing.md },
   lg: { minHeight: 56, paddingVertical: spacing.md, paddingHorizontal: spacing.lg },
   icon: { minHeight: 48, paddingVertical: spacing.md, paddingHorizontal: spacing.md },
+  /* eslint-enable react-native/no-unused-styles */
 
   center: {
     flex: 1,

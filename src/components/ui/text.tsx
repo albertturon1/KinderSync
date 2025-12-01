@@ -19,8 +19,8 @@ export interface TextProps extends RNTextProps {
   color?: keyof ThemeColors;
 }
 
-const textStyles = StyleSheet.create({
-  // Font sizes
+export const textStyles = StyleSheet.create({
+  /* eslint-disable react-native/no-unused-styles */
   h1: { fontSize: 32, lineHeight: 40 },
   h2: { fontSize: 24, lineHeight: 32 },
   h3: { fontSize: 20, lineHeight: 28 },
@@ -28,13 +28,13 @@ const textStyles = StyleSheet.create({
   label: { fontSize: 14, lineHeight: 20 },
   caption: { fontSize: 12, lineHeight: 16 },
   subtitle: { fontSize: 18, lineHeight: 26 },
-
-  // Font weights
+  
   light: { fontWeight: '300' },
   regular: { fontWeight: '400' },
   medium: { fontWeight: '500' },
   semibold: { fontWeight: '600' },
   bold: { fontWeight: '700' },
+  /* eslint-enable react-native/no-unused-styles */
 });
 
 export const Text = ({
