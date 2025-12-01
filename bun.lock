@@ -6,6 +6,7 @@
       "dependencies": {
         "@react-native-firebase/analytics": "^23.5.0",
         "@react-native-firebase/app": "^23.5.0",
+        "@react-native-firebase/auth": "^23.5.0",
         "@react-native-firebase/database": "^23.5.0",
         "@react-navigation/elements": "^2.8.4",
         "@react-navigation/native": "^7.1.22",
@@ -462,6 +463,8 @@
     "@react-native-firebase/analytics": ["@react-native-firebase/analytics@23.5.0", "", { "dependencies": { "superstruct": "^2.0.2" }, "peerDependencies": { "@react-native-firebase/app": "23.5.0" } }, "sha512-tLUVOB1dsrjFrh48OCMxS44MCn5OyOmE0Am1jPFoHsnDF1Rj61zXdn9POQjHAXPxsbZmZSP0opxIpdzfNULn7Q=="],
 
     "@react-native-firebase/app": ["@react-native-firebase/app@23.5.0", "", { "dependencies": { "firebase": "12.4.0" }, "peerDependencies": { "expo": ">=47.0.0", "react": "*", "react-native": "*" }, "optionalPeers": ["expo"] }, "sha512-TOlm6V6fbILwgFP37QZM9Y0nfAW6zqNGVIWlMlepQB6b/BzzFMrCl1FiyknqD5l7i1jgdFQrqX1WH6ZO4ePa/g=="],
+
+    "@react-native-firebase/auth": ["@react-native-firebase/auth@23.5.0", "", { "dependencies": { "plist": "^3.1.0" }, "peerDependencies": { "@react-native-firebase/app": "23.5.0", "expo": ">=47.0.0" }, "optionalPeers": ["expo"] }, "sha512-lsOIHhvxtGe4dGfsCOwyFux+eGB9b1zaII0/tvrsJMhH7Gm77RxZA8VCGefDqw/UBU3YpQ395LXs997nNok0pQ=="],
 
     "@react-native-firebase/database": ["@react-native-firebase/database@23.5.0", "", { "peerDependencies": { "@react-native-firebase/app": "23.5.0" } }, "sha512-GlI2BZyTiuzBNRZmlEtrcAFIEuAeAoOyQwDf1ezpkA8M5nfNP77REvbvxvhYrS+lVRFIYa7lKJ0REc5t7IRVaQ=="],
 

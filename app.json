@@ -17,7 +17,7 @@
         {
           "ios": {
             "useFrameworks": "static",
-            "forceStaticLinking": ["RNFBApp", "RNFBDatabase]"]
+            "forceStaticLinking": ["RNFBApp", "RNFBAuth", "RNFBAnalytics", "RNFBDatabase"]
           }
         }
       ]
@@ -30,9 +30,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.accuri.KinderSync",
