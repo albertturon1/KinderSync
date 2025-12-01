@@ -11,6 +11,10 @@ export const spacing = {
   xl: 32,
   '2xl': 48,
   '3xl': 64,
+  screen: {
+    horizontal: 16,
+    vertical: 12,
+  },
 };
 
 export const borderRadius = {
