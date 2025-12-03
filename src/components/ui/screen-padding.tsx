@@ -2,11 +2,11 @@ import { View, ViewStyle } from 'react-native';
 import { spacing } from './useTheme';
 import { ReactNode } from 'react';
 
-type ScreenPaddingProps = {
+interface ScreenPaddingProps {
   children: ReactNode;
   horizontal?: boolean;
   vertical?: boolean;
-};
+}
 
 export const ScreenPadding = ({
   children,

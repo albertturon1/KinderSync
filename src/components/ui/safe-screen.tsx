@@ -11,15 +11,14 @@ const styles = StyleSheet.create({
   },
 });
 
-type SafeScreenProps = {
+interface SafeScreenProps {
   children: ReactNode;
-  header?:
-    | {
-        title?: string;
-        showBack?: boolean; // default: true
-        right?: ReactNode;
-      };
-};
+  header?: {
+    title?: string;
+    showBack?: boolean; // default: true
+    right?: ReactNode;
+  };
+}
 
 export const SafeScreen = ({ children, header }: SafeScreenProps) => {
   const { colors } = useTheme();

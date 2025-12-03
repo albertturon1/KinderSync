@@ -28,7 +28,7 @@ export const borderRadius = {
   full: 9999,
 };
 
-export type ThemeColors = {
+export interface ThemeColors {
   background: string;
   foreground: string;
   primary: string;
@@ -48,7 +48,7 @@ export type ThemeColors = {
   cardForeground: string;
   popover: string;
   popoverForeground: string;
-};
+}
 
 export type ThemeColor = keyof ThemeColors;
 

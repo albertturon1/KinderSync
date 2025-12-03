@@ -1,4 +1,5 @@
-import { Activity, Child, Facility, Group, Presence, UserProfile } from "lib/validation/schemas";
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
+import { Activity, Child, Facility, Group, Presence, UserProfile } from '@/lib/validation/schemas';
 
 export interface DatabaseSchema {
   users: Record<string, UserProfile>;
@@ -42,10 +43,10 @@ export interface DatabaseSchema {
   };
 
   facilityChildren: {
-  [facilityId: string]: {
-    [childId: string]: true;
+    [facilityId: string]: {
+      [childId: string]: true;
+    };
   };
-}
 
   facilityUsers: {
     [facilityId: string]: {

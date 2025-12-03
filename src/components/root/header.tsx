@@ -5,12 +5,12 @@ import { useCanGoBack } from '@/hooks/useCanGoBack';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
 import { ArrowIconButton } from './arrow-icon-button';
 
-type HeaderProps = {
+interface HeaderProps {
   title?: string;
   rightElement?: ReactNode;
   children?: ReactNode;
   hideArrow?: boolean;
-};
+}
 
 export const Header = ({ title, rightElement, children, hideArrow }: HeaderProps) => {
   const navigation = useRootNavigation();
