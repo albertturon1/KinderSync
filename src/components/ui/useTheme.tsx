@@ -55,8 +55,6 @@ export type ThemeColor = keyof ThemeColors;
 export interface Theme {
   mode: ThemeMode;
   colors: ThemeColors;
-  spacing: typeof spacing;
-  borderRadius: typeof borderRadius;
   setMode: (mode: ThemeMode) => void;
   toggleMode: () => void;
 }
@@ -122,8 +120,6 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     () => ({
       mode,
       colors: mode === 'light' ? lightColors : darkColors,
-      spacing,
-      borderRadius,
       setMode,
       toggleMode,
     }),

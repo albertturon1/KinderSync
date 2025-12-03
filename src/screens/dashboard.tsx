@@ -1,10 +1,17 @@
+import { useAuth } from '@/components/root/auth-provider';
+import { Button } from '@/components/ui/button';
+import { SafeScreen } from '@/components/ui/safe-screen';
+import { ScreenPadding } from '@/components/ui/screen-padding';
 import { Text } from '@/components/ui/text';
-import { View } from 'react-native';
 
 export const DashboardScreen = () => {
+  const { logout } = useAuth();
   return (
-    <View>
-      <Text>Dashboard</Text>
-    </View>
+    <SafeScreen>
+      <ScreenPadding>
+        <Text>Dashboard</Text>
+        <Button title="Log out" onPress={logout} />
+      </ScreenPadding>
+    </SafeScreen>
   );
 };

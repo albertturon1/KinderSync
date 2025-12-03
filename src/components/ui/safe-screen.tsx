@@ -11,29 +11,29 @@ const styles = StyleSheet.create({
   },
 });
 
-type HeaderProps = {
-  title?: string;
-  rightElement?: ReactNode;
-  children?: ReactNode;
-};
-
 type SafeScreenProps = {
   children: ReactNode;
-  header?: HeaderProps;
+  header?:
+    | {
+        title?: string;
+        showBack?: boolean; // default: true
+        right?: ReactNode;
+      };
 };
 
 export const SafeScreen = ({ children, header }: SafeScreenProps) => {
   const { colors } = useTheme();
+
+  const shouldShowHeader = !!header;
+  const showBack = header?.showBack !== false;
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        {header && (
-          <Header title={header.title} rightElement={header.rightElement}>
-            {header.children}
-          </Header>
+        {shouldShowHeader && (
+          <Header title={header?.title} rightElement={header?.right} hideArrow={!showBack} />
         )}
         <View style={styles.flex}>{children}</View>
       </KeyboardAvoidingView>

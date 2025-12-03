@@ -1,5 +1,5 @@
 import { View, ViewStyle } from 'react-native';
-import { useTheme } from './useTheme';
+import { spacing } from './useTheme';
 import { ReactNode } from 'react';
 
 type ScreenPaddingProps = {
@@ -13,8 +13,6 @@ export const ScreenPadding = ({
   horizontal = true,
   vertical = true,
 }: ScreenPaddingProps) => {
-  const { spacing } = useTheme();
-
   const paddingStyle: ViewStyle = {
     paddingHorizontal: horizontal ? spacing.screen.horizontal : 0,
     paddingVertical: vertical ? spacing.screen.vertical : 0,

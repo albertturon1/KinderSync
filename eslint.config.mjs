@@ -56,7 +56,6 @@ export default [
       'prefer-const': 'error',
       'no-var': 'error',
       'no-duplicate-imports': 'error',
-      'max-lines': ['warn', { max: 300, skipBlankLines: true }],
     },
     settings: {
       react: { version: 'detect' },

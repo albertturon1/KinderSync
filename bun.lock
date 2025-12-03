@@ -4,6 +4,7 @@
     "": {
       "name": "KinderSync",
       "dependencies": {
+        "@expo/vector-icons": "^15.0.3",
         "@react-native-firebase/analytics": "^23.5.0",
         "@react-native-firebase/app": "^23.5.0",
         "@react-native-firebase/auth": "^23.5.0",

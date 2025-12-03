@@ -4,5 +4,76 @@
     "english": "Switch language to English"
   },
   "getStarted": "Open up the code for this screen:",
-  "changeCode": "Change any of the text, save the file, and your app will automatically update."
+  "changeCode": "Change any of the text, save the file, and your app will automatically update.",
+  "databaseStagingPanel": {
+    "title": "Admin Panel",
+    "databaseStatus": "Database Status",
+    "status": "Status",
+    "populated": "Populated",
+    "empty": "Empty",
+    "unknown": "Unknown",
+    "databaseOperations": "Database Operations",
+    "populateDatabase": "Populate Database",
+    "clearDatabase": "Clear Database",
+    "testCredentials": "Test Credentials",
+    "credentialsNote": "Use these credentials to test the application:",
+    "instructions": "Instructions",
+    "populateInstruction": "Click \"Populate Database\" to create test data - user, facilities etc.",
+    "clearInstruction": "Use \"Clear Database\" to remove all data",
+    "roles": {
+      "manager": "Manager",
+      "teacher": "Teacher",
+      "parent": "Parent"
+    }
+  },
+  "auth": {
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join KinderSync today",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "accountType": "Account type",
+      "teacher": "Teacher",
+      "parent": "Parent",
+      "createAccount": "Create Account",
+      "creatingAccount": "Creating Account...",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign In",
+      "errors": {
+        "fillAllFields": "Please fill in all fields",
+        "passwordsDoNotMatch": "Passwords do not match",
+        "nameTooShort": "Name must be at least 2 characters",
+        "passwordTooShort": "Password must be at least 6 characters",
+        "emailAlreadyInUse": "An account with this email already exists",
+        "weakPassword": "Password is too weak",
+        "invalidEmail": "Invalid email address",
+        "registrationFailed": "Registration failed. Please try again"
+      }
+    },
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Welcome back to KinderSync",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "signIn": "Sign In",
+      "signingIn": "Signing In...",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create Account",
+      "errors": {
+        "fillAllFields": "Please fill in all fields",
+        "invalidCredentials": "Invalid email or password",
+        "networkError": "Network error. Please check your connection",
+        "tooManyRequests": "Too many failed attempts. Please try again later",
+        "loginFailed": "Login failed. Please try again"
+      }
+    }
+  }
 }
