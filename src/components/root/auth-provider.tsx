@@ -14,8 +14,8 @@ import {
   signOut,
 } from '@react-native-firebase/auth';
 import { getDatabase, onValue, ref } from '@react-native-firebase/database';
-import { UserProfile as UserProfileType, UserProfileSchema } from 'lib/validation/schemas';
-import { FirebaseError, toFirebaseError,  } from 'lib/firebase/errors';
+import { UserProfile as UserProfileType, UserProfileSchema } from '@/lib/validation/schemas';
+import { FirebaseError, toFirebaseError } from '@/lib/firebase/errors';
 
 export type UserProfile = UserProfileType;
 export type UserProfileRole = UserProfileType['role'];
@@ -214,7 +214,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const onProfileChange = onValue(
       usersRef,
       (snapshot) => {
-        const data = snapshot.val();
+        const data = snapshot.val() as unknown;
 
         if (data) {
           const profileResult = UserProfileSchema.safeParse(data);
@@ -244,7 +244,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return () => {
       usersRef.off('value', onProfileChange);
     };
-  }, [state.user, state.isLoading]);
+  }, [state.user]);
 
   const login = useCallback(
     async (

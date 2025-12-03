@@ -3,8 +3,8 @@ import { View, Pressable, StyleSheet, ScrollView, Switch } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { RootStackProps } from '@/types/INavigation';
 import { UserProfileRole } from '@/components/root/auth-provider';
-import { UserProfile, UserProfileSchema } from 'lib/validation/schemas';
-import { toFirebaseError } from 'lib/firebase/errors';
+import { UserProfile, UserProfileSchema } from '@/lib/validation/schemas';
+import { toFirebaseError } from '@/lib/firebase/errors';
 import {
   createUserWithEmailAndPassword,
   FirebaseAuthTypes,

@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/button';
 import { SafeScreen } from '@/components/ui/safe-screen';
 import { ScreenPadding } from '@/components/ui/screen-padding';
 import { Input } from '@/components/ui/input';
-import { toFirebaseError } from 'lib/firebase/errors';
-
+import { toFirebaseError } from '@/lib/firebase/errors';
 
 // TODO: add forms library to simplify state
 export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {

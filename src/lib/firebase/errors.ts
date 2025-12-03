@@ -23,7 +23,7 @@ export class FirebaseError extends Error implements NativeFirebaseError {
   constructor(
     code: string,
     message: string,
-    namespace: string = 'firebase',
+    namespace = 'firebase',
     nativeErrorCode?: string | number,
     nativeErrorMessage?: string,
     cause?: unknown
@@ -32,8 +32,8 @@ export class FirebaseError extends Error implements NativeFirebaseError {
     this.name = 'FirebaseError';
     this.code = code;
     this.namespace = namespace;
-    this.nativeErrorCode = nativeErrorCode || '';
-    this.nativeErrorMessage = nativeErrorMessage || '';
+    this.nativeErrorCode = nativeErrorCode ?? '';
+    this.nativeErrorMessage = nativeErrorMessage ?? '';
     this.cause = cause;
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
@@ -112,7 +112,7 @@ export function isFirebaseError(error: unknown): error is FirebaseError {
   return error instanceof FirebaseError;
 }
 
-export function toFirebaseError(error: unknown, fallbackCode: string = 'unknown'): FirebaseError {
+export function toFirebaseError(error: unknown, fallbackCode = 'unknown'): FirebaseError {
   if (isFirebaseError(error)) {
     return error;
   }

@@ -11,7 +11,7 @@ import { TEST_DATABASE, TEST_USERS } from '@/config/test-credentials';
 import { getDatabase, ref, set, onValue } from '@react-native-firebase/database';
 import { createUserWithEmailAndPassword, getAuth } from '@react-native-firebase/auth';
 import { z } from 'zod';
-import { FIREBASE_ERROR_CODES, toFirebaseError } from 'lib/firebase/errors';
+import { FIREBASE_ERROR_CODES, toFirebaseError } from '@/lib/firebase/errors';
 
 type DatabaseStatus = 'empty' | 'populated' | 'unknown';
 
@@ -26,10 +26,9 @@ export const DatabaseStagingPanelScreen = () => {
   useEffect(() => {
     const unsubscribe = onValue(ref(getDatabase(), '/'), (snapshot) => {
       try {
-        const value = snapshot.val();
+        const value = snapshot.val() as unknown;
 
-        const databaseSchema = z
-          .record(z.string(), z.any());
+        const databaseSchema = z.record(z.string(), z.any());
 
         const result = databaseSchema.safeParse(value);
         if (result.success && Object.keys(result.data).length > 0) {
