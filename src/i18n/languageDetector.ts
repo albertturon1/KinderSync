@@ -8,6 +8,8 @@ export const languageDetector: LanguageDetectorModule = {
     const firstLanguageCode = locales[0].languageCode ?? 'en';
     return firstLanguageCode;
   },
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   init: () => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   cacheUserLanguage: () => {},
 };
