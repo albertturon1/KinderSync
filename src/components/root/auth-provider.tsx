@@ -14,11 +14,10 @@ import {
   signOut,
 } from '@react-native-firebase/auth';
 import { getDatabase, onValue, ref } from '@react-native-firebase/database';
-import { UserProfile as UserProfileType, UserProfileSchema } from '@/lib/validation/schemas';
+import { UserProfile, UserProfileSchema } from '@/lib/validation/schemas';
 import { FirebaseError, toFirebaseError } from '@/lib/firebase/errors';
 
-export type UserProfile = UserProfileType;
-export type UserProfileRole = UserProfileType['role'];
+export type UserProfileRole = UserProfile['role'];
 
 export type AuthStatus = 'idle' | 'loading' | 'authenticated' | 'unauthenticated' | 'error';
 
@@ -31,7 +30,7 @@ export interface UserPermissions {
 interface AuthState {
   status: AuthStatus;
   user: FirebaseAuthTypes.User | null;
-  profile: UserProfileType | null;
+  profile: UserProfile | null;
   permissions: UserPermissions;
   error: FirebaseError | null;
   isLoading: boolean;
@@ -42,7 +41,7 @@ type AuthAction =
   | { type: 'AUTH_SUCCESS'; user: FirebaseAuthTypes.User }
   | { type: 'AUTH_ERROR'; error: FirebaseError }
   | { type: 'PROFILE_LOADING' }
-  | { type: 'PROFILE_SUCCESS'; profile: UserProfileType }
+  | { type: 'PROFILE_SUCCESS'; profile: UserProfile }
   | { type: 'PROFILE_ERROR'; error: FirebaseError }
   | { type: 'CLEAR_ERROR' }
   | { type: 'RESET' };

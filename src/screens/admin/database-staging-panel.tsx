@@ -1,12 +1,11 @@
-/* eslint-disable react-native/no-unused-styles */
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { SafeScreen } from '@/components/ui/safe-screen';
 import { ScreenPadding } from '@/components/ui/screen-padding';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui/button';
-import { useTheme, spacing, borderRadius, ThemeColors } from '@/components/ui/useTheme';
+
 import { TEST_DATABASE, TEST_USERS } from '@/config/test-credentials';
 import { getDatabase, ref, set, onValue } from '@react-native-firebase/database';
 import { createUserWithEmailAndPassword, getAuth } from '@react-native-firebase/auth';
@@ -17,8 +16,6 @@ type DatabaseStatus = 'empty' | 'populated' | 'unknown';
 
 export const DatabaseStagingPanelScreen = () => {
   const { t } = useTranslation();
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
   const [loading, setLoading] = useState<string | null>(null);
   const [dbStatus, setDbStatus] = useState<DatabaseStatus>('unknown');
   const [error, setError] = useState<string | null>(null);
@@ -78,7 +75,9 @@ export const DatabaseStagingPanelScreen = () => {
       await operation();
     } catch (err) {
       const firebaseError = toFirebaseError(err, operationName);
-      setError(`${operationName} failed: ${firebaseError.getUserMessage()}`);
+      setError(
+        `${operationName} ${t('databaseStagingPanel.errors.operationFailed')}: ${firebaseError.getUserMessage()}`
+      );
     } finally {
       setLoading(null);
     }
@@ -88,24 +87,24 @@ export const DatabaseStagingPanelScreen = () => {
     <SafeScreen header={{ title: t('databaseStagingPanel.title') }}>
       <ScrollView>
         <ScreenPadding>
-          <View style={styles.contentContainerStyle}>
-            <View style={styles.section}>
-              <Text size="subtitle" weight="semibold" style={styles.sectionTitle}>
+          <View className="gap-md">
+            <View className="bg-card rounded-xl p-md">
+              <Text size="subtitle" weight="semibold" className="mb-md">
                 {t('databaseStagingPanel.databaseStatus')}
               </Text>
-              <View style={styles.statusContainer}>
-                <Text size="body" color="mutedForeground">
+              <View className="flex-row items-center mb-md">
+                <Text size="body" className="text-muted-foreground">
                   {t('databaseStagingPanel.status')}:
                 </Text>
                 <Text
                   size="body"
                   weight="semibold"
-                  color={
+                  className={
                     dbStatus === 'populated'
-                      ? 'primary'
+                      ? 'text-primary'
                       : dbStatus === 'empty'
-                        ? 'destructive'
-                        : 'mutedForeground'
+                        ? 'text-destructive'
+                        : 'text-muted-foreground'
                   }>
                   {dbStatus === 'populated'
                     ? t('databaseStagingPanel.populated')
@@ -117,12 +116,12 @@ export const DatabaseStagingPanelScreen = () => {
             </View>
 
             {/* Database Operations */}
-            <View style={styles.section}>
-              <Text size="subtitle" weight="semibold" style={styles.sectionTitle}>
+            <View className="bg-card rounded-xl p-md">
+              <Text size="subtitle" weight="semibold" className="mb-md">
                 {t('databaseStagingPanel.databaseOperations')}
               </Text>
 
-              <View style={styles.buttonGrid}>
+              <View className="gap-md">
                 <Button
                   title={t('databaseStagingPanel.populateDatabase')}
                   loading={loading === 'populateDatabase'}
@@ -142,18 +141,20 @@ export const DatabaseStagingPanelScreen = () => {
 
             {/* Test Credentials - Only show when database is populated */}
             {dbStatus === 'populated' && (
-              <View style={styles.section}>
-                <Text size="subtitle" weight="semibold" style={styles.sectionTitle}>
+              <View className="bg-card rounded-xl p-md">
+                <Text size="subtitle" weight="semibold" className="mb-md">
                   {t('databaseStagingPanel.testCredentials')}
                 </Text>
-                <Text size="caption" color="mutedForeground" style={styles.credentialsNote}>
+                <Text size="caption" className="text-muted-foreground mb-md">
                   {t('databaseStagingPanel.credentialsNote')}
                 </Text>
 
-                <View style={styles.credentialsContainer}>
+                <View className="gap-md">
                   {TEST_USERS.map((user) => (
-                    <View key={user.email} style={styles.credentialItem}>
-                      <Text size="label" weight="semibold" color="primary">
+                    <View
+                      key={user.email}
+                      className="bg-muted p-md rounded-md border-l-3 border-l-primary">
+                      <Text size="label" weight="semibold" className="text-primary">
                         {t(`databaseStagingPanel.roles.${user.role}`)}:
                       </Text>
                       <Text size="body">
@@ -166,23 +167,23 @@ export const DatabaseStagingPanelScreen = () => {
             )}
 
             {error && (
-              <View style={[styles.messageContainer, styles.errorMessage]}>
-                <Text size="body" color="destructive">
+              <View className="mb-lg p-md rounded-md bg-destructive/20">
+                <Text size="body" className="text-destructive">
                   {error}
                 </Text>
               </View>
             )}
 
             {/* Instructions */}
-            <View style={styles.section}>
-              <Text size="subtitle" weight="semibold" style={styles.sectionTitle}>
+            <View className="bg-card rounded-xl p-md">
+              <Text size="subtitle" weight="semibold" className="mb-md">
                 {t('databaseStagingPanel.instructions')}
               </Text>
-              <View style={styles.instructions}>
-                <Text size="body" color="mutedForeground" style={styles.instructionItem}>
+              <View className="gap-sm">
+                <Text size="body" className="text-muted-foreground">
                   {'• ' + t('databaseStagingPanel.populateInstruction')}
                 </Text>
-                <Text size="body" color="mutedForeground" style={styles.instructionItem}>
+                <Text size="body" className="text-muted-foreground">
                   {'• ' + t('databaseStagingPanel.clearInstruction')}
                 </Text>
               </View>
@@ -193,55 +194,3 @@ export const DatabaseStagingPanelScreen = () => {
     </SafeScreen>
   );
 };
-
-const createStyles = (colors: ThemeColors) =>
-  StyleSheet.create({
-    contentContainerStyle: {
-      gap: spacing.md,
-    },
-    section: {
-      backgroundColor: colors.card,
-      borderRadius: borderRadius.xl,
-    },
-    sectionTitle: {
-      marginBottom: spacing.md,
-    },
-    statusContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: spacing.md,
-    },
-    buttonGrid: {
-      gap: spacing.md,
-    },
-    credentialsContainer: {
-      gap: spacing.md,
-    },
-    credentialItem: {
-      backgroundColor: colors.muted,
-      padding: spacing.md,
-      borderRadius: borderRadius.md,
-      borderLeftWidth: 3,
-      borderLeftColor: colors.primary,
-    },
-    credentialsNote: {
-      marginBottom: spacing.md,
-    },
-    messageContainer: {
-      marginBottom: spacing.lg,
-      padding: spacing.md,
-      borderRadius: borderRadius.md,
-    },
-    errorMessage: {
-      backgroundColor: colors.destructive + '20',
-    },
-    successMessage: {
-      backgroundColor: colors.primary + '20',
-    },
-    instructions: {
-      gap: spacing.sm,
-    },
-    instructionItem: {
-      paddingLeft: spacing.sm,
-    },
-  });

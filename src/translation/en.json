@@ -24,7 +24,14 @@
       "manager": "Manager",
       "teacher": "Teacher",
       "parent": "Parent"
+    },
+    "errors": {
+      "operationFailed": "failed"
     }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "logOut": "Log out"
   },
   "auth": {
     "register": {

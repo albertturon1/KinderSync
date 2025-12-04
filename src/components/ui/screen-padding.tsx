@@ -1,22 +1,21 @@
-import { View, ViewStyle } from 'react-native';
-import { spacing } from './useTheme';
+import { View } from 'react-native';
 import { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ScreenPaddingProps {
   children: ReactNode;
   horizontal?: boolean;
   vertical?: boolean;
+  className?: string;
 }
 
 export const ScreenPadding = ({
   children,
   horizontal = true,
   vertical = true,
+  className,
 }: ScreenPaddingProps) => {
-  const paddingStyle: ViewStyle = {
-    paddingHorizontal: horizontal ? spacing.screen.horizontal : 0,
-    paddingVertical: vertical ? spacing.screen.vertical : 0,
-  };
-
-  return <View style={paddingStyle}>{children}</View>;
+  return (
+    <View className={cn(horizontal && 'px-md', vertical && 'py-sm', className)}>{children}</View>
+  );
 };

@@ -1,5 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { useTheme, spacing } from '@/components/ui/useTheme';
+import { View, Text } from 'react-native';
 import { ReactNode } from 'react';
 import { useCanGoBack } from '@/hooks/useCanGoBack';
 import { useRootNavigation } from '@/hooks/useRootNavigation';
@@ -14,13 +13,12 @@ interface HeaderProps {
 
 export const Header = ({ title, rightElement, children, hideArrow }: HeaderProps) => {
   const navigation = useRootNavigation();
-  const { colors } = useTheme();
   const canGoBack = useCanGoBack();
   const showArrow = canGoBack && !hideArrow;
 
   return (
-    <View style={[styles.header, { backgroundColor: colors.background }]}>
-      <View style={styles.leftSection}>
+    <View className="relative flex-row items-center h-11 px-md z-10000 bg-background">
+      <View className="absolute h-full justify-center min-w-11">
         {showArrow && (
           <ArrowIconButton
             onPress={() => {
@@ -30,58 +28,17 @@ export const Header = ({ title, rightElement, children, hideArrow }: HeaderProps
         )}
       </View>
 
-      <View style={styles.centerSection}>
+      <View className="absolute left-0 right-0 h-full justify-center items-center px-[60px]">
         {title && (
-          <Text style={[styles.title, { color: colors.foreground }]} numberOfLines={1}>
+          <Text className="text-lg font-semibold text-center text-foreground" numberOfLines={1}>
             {title}
           </Text>
         )}
       </View>
-      <View style={styles.rightSection}>{rightElement}</View>
-      {children && <View style={styles.headerContent}>{children}</View>}
+      <View className="absolute right-md h-full justify-center min-w-11">
+        {rightElement}
+      </View>
+      {children && <View className="px-md">{children}</View>}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    position: 'relative',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 44,
-    paddingHorizontal: spacing.md,
-    zIndex: 10000,
-  },
-  leftSection: {
-    position: 'absolute',
-    height: '100%',
-    justifyContent: 'center',
-    zIndex: 1,
-    minWidth: 44,
-  },
-  centerSection: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 60, // Space for left and right sections
-  },
-  rightSection: {
-    position: 'absolute',
-    right: spacing.md,
-    height: '100%',
-    justifyContent: 'center',
-    zIndex: 1,
-    minWidth: 44,
-  },
-  headerContent: {
-    paddingHorizontal: spacing.md,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-});

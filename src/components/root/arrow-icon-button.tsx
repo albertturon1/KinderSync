@@ -1,6 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet } from 'react-native';
-import { useTheme, spacing } from '@/components/ui/useTheme';
+import { Pressable } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 interface ArrowIconButtonProps {
@@ -8,20 +7,9 @@ interface ArrowIconButtonProps {
 }
 
 export const ArrowIconButton = ({ onPress }: ArrowIconButtonProps) => {
-  const { colors } = useTheme();
-
   return (
-    <Pressable style={styles.container} onPress={onPress}>
-      <AntDesign name="arrow-left" size={18} color={colors.foreground} />
+    <Pressable className="px-md min-h-11 justify-center items-center" onPress={onPress}>
+      <AntDesign name="arrow-left" size={18} className="text-foreground" />
     </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: spacing.screen.horizontal,
-    minHeight: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});

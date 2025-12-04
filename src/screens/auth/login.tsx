@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Pressable, StyleSheet, ScrollView } from 'react-native';
+import { View, Pressable, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { RootStackProps } from '@/types/INavigation';
 import { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth';
 import { Text } from '@/components/ui/text';
@@ -11,6 +12,7 @@ import { toFirebaseError } from '@/lib/firebase/errors';
 
 // TODO: add forms library to simplify state
 export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +21,7 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      setError('Please fill in all fields');
+      setError(t('auth.login.errors.fillAllFields'));
       return;
     }
 
@@ -40,23 +42,24 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
   const isFormValid = !!email && !!password && password.length >= 6;
 
   return (
-    <SafeScreen header={{ title: 'Welcome Back' }}>
+    <SafeScreen header={{ title: t('auth.login.title') }}>
       <ScreenPadding>
         <ScrollView
-          contentContainerStyle={styles.scrollContainer}
+          bounces={false}
+          contentContainerClassName="grow justify-center"
           showsVerticalScrollIndicator={false}>
-          <View style={styles.formContainer}>
-            <Text size="body" color="mutedForeground" style={styles.subtitle}>
-              Sign in to your KinderSync account
+          <View className="gap-6">
+            <Text size="body" className="text-muted-foreground">
+              {t('auth.login.subtitle')}
             </Text>
 
-            <View style={styles.fieldContainer}>
+            <View className="gap-2">
               <Text size="label" weight="semibold">
-                Email
+                {t('auth.login.email')}
               </Text>
               <Input
-                style={styles.input}
-                placeholder="Enter your email"
+                className="border rounded-lg p-4"
+                placeholder={t('auth.login.emailPlaceholder')}
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
@@ -65,67 +68,69 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
               />
             </View>
 
-            <View style={styles.fieldContainer}>
+            <View className="gap-2">
               <Text size="label" weight="semibold">
-                Password
+                {t('auth.login.password')}
               </Text>
-              <View style={styles.passwordContainer}>
+              <View className="flex-row items-center relative">
                 <Input
-                  style={[styles.input, styles.passwordInput]}
-                  placeholder="Enter your password"
+                  className="border rounded-lg p-4 flex-1"
+                  placeholder={t('auth.login.passwordPlaceholder')}
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                 />
-                <Pressable style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
-                  <Text style={styles.eyeText}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                <Pressable
+                  className="absolute right-[15px] p-[5px]"
+                  onPress={() => setShowPassword(!showPassword)}>
+                  <Text className="text-xl">{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
                 </Pressable>
               </View>
             </View>
 
-            <View style={styles.errorContainer}>
+            <View className="min-h-[8px]">
               {error && (
-                <Text size="caption" color="destructive" style={styles.errorText}>
+                <Text size="caption" className="text-destructive text-center">
                   {error}
                 </Text>
               )}
 
               {password && password.length < 6 && (
-                <Text size="caption" color="destructive" style={styles.errorText}>
-                  Password must be at least 6 characters
+                <Text size="caption" className="text-destructive text-center">
+                  {t('auth.login.errors.passwordTooShort')}
                 </Text>
               )}
             </View>
 
             <Button
-              title={isLoading ? 'Signing In...' : 'Sign In'}
+              title={isLoading ? t('auth.login.signingIn') : t('auth.login.signIn')}
               loading={isLoading}
               disabled={!isFormValid}
               onPress={handleLogin}
             />
 
-            <View style={styles.registerContainer}>
-              <Text size="caption" color="mutedForeground">
-                {"Don't have an account? "}
+            <View className="flex-row justify-center items-center">
+              <Text size="caption" className="text-muted-foreground">
+                {t('auth.login.noAccount')}&nbsp;
               </Text>
               <Pressable
                 onPress={() => {
                   navigation.navigate('Register');
                 }}>
-                <Text size="caption" color="primary" weight="semibold">
-                  Create one
+                <Text size="caption" weight="semibold" className="text-primary">
+                  {t('auth.login.createAccount')}
                 </Text>
               </Pressable>
             </View>
 
-            <View style={styles.adminContainer}>
+            <View className="flex-row justify-center items-center mt-4">
               <Pressable
                 onPress={() => {
                   navigation.navigate('DatabaseStagingPanel');
                 }}>
-                <Text size="caption" color="mutedForeground" weight="semibold">
-                  Database Staging Panel
+                <Text size="caption" weight="semibold" className="text-muted-foreground">
+                  {t('databaseStagingPanel.title')}
                 </Text>
               </Pressable>
             </View>
@@ -135,62 +140,3 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
     </SafeScreen>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  formContainer: {
-    borderRadius: 20,
-    elevation: 5,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-  },
-  subtitle: {
-    marginBottom: 32,
-  },
-  fieldContainer: {
-    marginBottom: 24,
-  },
-  errorContainer: {
-    marginBottom: 8,
-    minHeight: 8,
-  },
-  errorText: {
-    textAlign: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 16,
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  passwordInput: {
-    flex: 1,
-  },
-  eyeButton: {
-    position: 'absolute',
-    right: 15,
-    padding: 5,
-  },
-  eyeText: {
-    fontSize: 20,
-  },
-  registerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 24,
-  },
-  adminContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 16,
-  },
-});

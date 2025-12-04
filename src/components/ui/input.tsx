@@ -1,43 +1,38 @@
 import * as React from 'react';
-import { TextInput, TextInputProps, StyleSheet } from 'react-native';
-import { textStyles } from './text';
-import { spacing, borderRadius, useTheme } from './useTheme';
+import { TextInput, TextInputProps } from 'react-native';
+import { tv } from 'tailwind-variants';
+import { cn } from '@/lib/utils';
 
 interface InputProps extends TextInputProps {
   error?: boolean;
+  className?: string;
 }
 
-export const Input = ({ style, error, ...props }: InputProps) => {
-  const { colors, mode } = useTheme();
+const input = tv({
+  base: 'text-base min-h-[44px] px-sm rounded-md border text-foreground placeholder:text-muted-foreground',
+  variants: {
+    state: {
+      default: 'border-input bg-transparent dark:bg-input',
+      focused: 'border-ring bg-transparent dark:bg-input',
+      error: 'border-destructive bg-transparent dark:bg-input',
+    },
+  },
+  defaultVariants: {
+    state: 'default',
+  },
+});
+
+export const Input = ({ className, error, ...props }: InputProps) => {
   const [isFocused, setIsFocused] = React.useState(false);
 
-  const inputStyle = [
-    styles.input,
-    {
-      borderColor: error ? colors.destructive : isFocused ? colors.ring : colors.input,
-      backgroundColor: mode === 'dark' ? colors.input : 'transparent',
-      color: colors.foreground,
-    },
-    style,
-  ];
+  const state = error ? 'error' : isFocused ? 'focused' : 'default';
 
   return (
     <TextInput
       {...props}
-      style={inputStyle}
-      placeholderTextColor={colors.mutedForeground}
+      className={cn(input({ state }), className)}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    fontSize: textStyles.body.fontSize,
-    minHeight: 44,
-    paddingHorizontal: spacing.sm,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-  },
-});

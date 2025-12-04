@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Pressable, StyleSheet, ScrollView, Switch } from 'react-native';
+import { View, Pressable, ScrollView, Switch } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { RootStackProps } from '@/types/INavigation';
 import { UserProfileRole } from '@/components/root/auth-provider';
@@ -137,19 +137,20 @@ export const RegisterScreen = ({ navigation }: RootStackProps<'Register'>) => {
     <SafeScreen header={{ title: t('auth.register.title') }}>
       <ScreenPadding>
         <ScrollView
-          contentContainerStyle={styles.scrollContainer}
+          bounces={false}
+          contentContainerClassName="grow justify-center"
           showsVerticalScrollIndicator={false}>
-          <View style={styles.formContainer}>
-            <Text size="body" color="mutedForeground" style={styles.subtitle}>
+          <View className="gap-6">
+            <Text size="body" className="text-muted-foreground">
               {t('auth.register.subtitle')}
             </Text>
 
-            <View style={styles.fieldContainer}>
+            <View className="gap-2">
               <Text size="label" weight="semibold">
                 {t('auth.register.fullName')}
               </Text>
               <Input
-                style={styles.input}
+                className="border rounded-lg p-4"
                 placeholder={t('auth.register.fullNamePlaceholder')}
                 value={fullName}
                 onChangeText={setFullName}
@@ -158,12 +159,12 @@ export const RegisterScreen = ({ navigation }: RootStackProps<'Register'>) => {
               />
             </View>
 
-            <View style={styles.fieldContainer}>
+            <View className="gap-2">
               <Text size="label" weight="semibold">
                 {t('auth.register.email')}
               </Text>
               <Input
-                style={styles.input}
+                className="border rounded-lg p-4"
                 placeholder={t('auth.register.emailPlaceholder')}
                 value={email}
                 onChangeText={setEmail}
@@ -173,86 +174,78 @@ export const RegisterScreen = ({ navigation }: RootStackProps<'Register'>) => {
               />
             </View>
 
-            <View style={styles.fieldContainer}>
+            <View className="gap-2">
               <Text size="label" weight="semibold">
                 {t('auth.register.password')}
               </Text>
-              <View style={styles.passwordContainer}>
+              <View className="flex-row items-center relative">
                 <Input
-                  style={[styles.input, styles.passwordInput]}
+                  className="border rounded-lg p-4 flex-1"
                   placeholder={t('auth.register.passwordPlaceholder')}
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                 />
-                <Pressable style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
-                  <Text style={styles.eyeText}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                <Pressable
+                  className="absolute right-[15px] p-[5px]"
+                  onPress={() => setShowPassword(!showPassword)}>
+                  <Text className="text-xl">{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
                 </Pressable>
               </View>
             </View>
 
-            <View style={styles.fieldContainer}>
+            <View className="gap-2">
               <Text size="label" weight="semibold">
                 {t('auth.register.confirmPassword')}
               </Text>
-              <View style={styles.passwordContainer}>
+              <View className="flex-row items-center relative">
                 <Input
-                  style={[styles.input, styles.passwordInput]}
+                  className="border rounded-lg p-4 flex-1"
                   placeholder={t('auth.register.confirmPasswordPlaceholder')}
                   value={confirmPassword}
                   onChangeText={setConfirmPassword}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
                 />
-                <Pressable style={styles.eyeButton} onPress={() => setShowPassword(!showPassword)}>
-                  <Text style={styles.eyeText}>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
+                <Pressable
+                  className="absolute right-[15px] p-[5px]"
+                  onPress={() => setShowPassword(!showPassword)}>
+                  <Text className="text-xl">{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
                 </Pressable>
               </View>
             </View>
 
-            <View style={styles.fieldContainer}>
+            <View className="gap-2">
               <Text size="label" weight="semibold">
                 {t('auth.register.accountType')}
               </Text>
-              <View style={styles.switchContainer}>
-                <Text size="body" style={styles.switchLabel}>
-                  {t('auth.register.teacher')}
-                </Text>
+              <View className="flex-row items-center justify-between">
+                <Text size="body">{t('auth.register.teacher')}</Text>
                 <Switch
-                  trackColor={{ false: '#767577', true: '#81b0ff' }}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={(value) => {
-                    if (value) {
-                      setAccountType('parent');
-                    } else {
-                      setAccountType('teacher');
-                    }
-                  }}
                   value={accountType === 'parent'}
+                  onValueChange={(value) => setAccountType(value ? 'parent' : 'teacher')}
                 />
-                <Text size="body" style={styles.switchLabel}>
-                  {t('auth.register.parent')}
-                </Text>
+                <Text size="body">{t('auth.register.parent')}</Text>
               </View>
             </View>
 
-            <View style={styles.errorContainer}>
+            <View className="min-h-[8px]">
               {error && (
-                <Text size="caption" color="destructive" style={styles.errorText}>
+                <Text size="caption" className="text-destructive text-center">
                   {error}
                 </Text>
               )}
 
               {password && password.length < 6 && (
-                <Text size="caption" color="destructive" style={styles.errorText}>
+                <Text size="caption" className="text-destructive text-center">
                   {t('auth.register.errors.passwordTooShort')}
                 </Text>
               )}
 
-              {fullName && fullName.trim().length < 2 && (
-                <Text size="caption" color="destructive" style={styles.errorText}>
-                  {t('auth.register.errors.nameTooShort')}
+              {confirmPassword && password !== confirmPassword && (
+                <Text size="caption" className="text-destructive text-center">
+                  {t('auth.register.errors.passwordsDoNotMatch')}
                 </Text>
               )}
             </View>
@@ -266,15 +259,15 @@ export const RegisterScreen = ({ navigation }: RootStackProps<'Register'>) => {
               onPress={handleRegister}
             />
 
-            <View style={styles.loginContainer}>
-              <Text size="caption" color="mutedForeground">
-                {t('auth.register.alreadyHaveAccount')}{' '}
+            <View className="flex-row justify-center items-center">
+              <Text size="caption" className="text-muted-foreground">
+                {t('auth.register.alreadyHaveAccount')}&nbsp;
               </Text>
               <Pressable
                 onPress={() => {
                   navigation.navigate('Login');
                 }}>
-                <Text size="caption" color="primary" weight="semibold">
+                <Text size="caption" weight="semibold" className="text-primary">
                   {t('auth.register.signIn')}
                 </Text>
               </Pressable>
@@ -285,65 +278,3 @@ export const RegisterScreen = ({ navigation }: RootStackProps<'Register'>) => {
     </SafeScreen>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  formContainer: {
-    borderRadius: 20,
-    elevation: 5,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-  },
-  subtitle: {
-    marginBottom: 32,
-  },
-  fieldContainer: {
-    marginBottom: 24,
-  },
-  errorContainer: {
-    marginBottom: 8,
-    minHeight: 8,
-  },
-  errorText: {
-    textAlign: 'center',
-  },
-  switchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  switchLabel: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 16,
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  passwordInput: {
-    flex: 1,
-  },
-  eyeButton: {
-    position: 'absolute',
-    right: 15,
-    padding: 5,
-  },
-  eyeText: {
-    fontSize: 20,
-  },
-  loginContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 24,
-  },
-});

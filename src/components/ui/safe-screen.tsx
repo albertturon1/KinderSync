@@ -1,11 +1,10 @@
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
-import { useTheme } from './useTheme';
 import { ReactNode } from 'react';
 import { Header } from '../root/header';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useCSSVariable } from 'uniwind';
 
 const styles = StyleSheet.create({
-  flex: { flex: 1 },
   container: {
     flex: 1,
   },
@@ -21,20 +20,20 @@ interface SafeScreenProps {
 }
 
 export const SafeScreen = ({ children, header }: SafeScreenProps) => {
-  const { colors } = useTheme();
-
   const shouldShowHeader = !!header;
   const showBack = header?.showBack !== false;
+  const backgroundColor = useCSSVariable('--color-background') as string;
 
+  // SafeAreaView requires using style instead of className
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor }]}>
       <KeyboardAvoidingView
-        style={styles.flex}
+        className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         {shouldShowHeader && (
           <Header title={header?.title} rightElement={header?.right} hideArrow={!showBack} />
         )}
-        <View style={styles.flex}>{children}</View>
+        <View className="flex-1">{children}</View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
