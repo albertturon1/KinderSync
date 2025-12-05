@@ -34,7 +34,11 @@
     "logOut": "Log out"
   },
   "auth": {
-    "register": {
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "networkError": "Network error. Please check your connection"
+    },
+    "signUp": {
       "title": "Create Account",
       "subtitle": "Join KinderSync today",
       "fullName": "Full Name",
@@ -63,7 +67,7 @@
         "registrationFailed": "Registration failed. Please try again"
       }
     },
-    "login": {
+    "signIn": {
       "title": "Sign In",
       "subtitle": "Welcome back to KinderSync",
       "email": "Email",
@@ -79,7 +83,7 @@
         "invalidCredentials": "Invalid email or password",
         "networkError": "Network error. Please check your connection",
         "tooManyRequests": "Too many failed attempts. Please try again later",
-        "loginFailed": "Login failed. Please try again"
+        "signInFailed": "SignIn failed. Please try again"
       }
     }
   }

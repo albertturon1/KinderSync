@@ -4,8 +4,8 @@ import { tv } from 'tailwind-variants';
 import { Text } from './text';
 import { cn } from '@/lib/utils';
 
-export type ButtonMode = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
-export type ButtonSize = 'sm' | 'default' | 'lg' | 'icon';
+type ButtonMode = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+type ButtonSize = 'sm' | 'default' | 'lg' | 'icon';
 
 export interface ButtonProps extends Omit<PressableProps, 'style'> {
   title: string;
@@ -18,7 +18,7 @@ export interface ButtonProps extends Omit<PressableProps, 'style'> {
 }
 
 const button = tv({
-  base: 'flex-row items-center justify-center rounded-lg overflow-hidden',
+  base: 'flex-row items-center justify-center rounded-lg overflow-hidden select-none',
   variants: {
     mode: {
       default: 'bg-primary',

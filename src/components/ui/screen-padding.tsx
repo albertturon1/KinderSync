@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -15,7 +15,8 @@ export const ScreenPadding = ({
   vertical = true,
   className,
 }: ScreenPaddingProps) => {
+  const isMobile = Platform.OS  !== 'web'
   return (
-    <View className={cn(horizontal && 'px-md', vertical && 'py-sm', className)}>{children}</View>
+    <View className={cn(horizontal && isMobile && 'px-md', vertical && isMobile && 'py-sm', className)}>{children}</View>
   );
 };

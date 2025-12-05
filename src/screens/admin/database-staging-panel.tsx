@@ -10,7 +10,8 @@ import { TEST_DATABASE, TEST_USERS } from '@/config/test-credentials';
 import { getDatabase, ref, set, onValue } from '@react-native-firebase/database';
 import { createUserWithEmailAndPassword, getAuth } from '@react-native-firebase/auth';
 import { z } from 'zod';
-import { FIREBASE_ERROR_CODES, toFirebaseError } from '@/lib/firebase/errors';
+import { normalizeFirebaseAuthError } from '@/errors/normalizeFirebaseAuthError';
+import { SIGNUP_ERRORS } from '@/lib/firebase/auth/auth.errors';
 
 type DatabaseStatus = 'empty' | 'populated' | 'unknown';
 
@@ -51,11 +52,9 @@ export const DatabaseStagingPanelScreen = () => {
         try {
           await createUserWithEmailAndPassword(getAuth(), user.email, user.password);
         } catch (e) {
-          const firebaseError = toFirebaseError(e, 'createUser');
-          if (firebaseError.code === FIREBASE_ERROR_CODES.EMAIL_ALREADY_IN_USE) {
+          const error = normalizeFirebaseAuthError(e, SIGNUP_ERRORS);
+          if (error.type === 'auth/email-already-in-use') {
             // ignore because test account already exists
-            // eslint-disable-next-line no-console
-            console.log(`User ${user.email} already exists — OK`);
           }
         }
       }),
@@ -63,21 +62,16 @@ export const DatabaseStagingPanelScreen = () => {
     ]);
   };
 
-  const clearDatabase = async () => {
-    await set(ref(getDatabase(), '/'), null);
-  };
-
-  const handleOperation = async (operation: () => Promise<void>, operationName: string) => {
-    setLoading(operationName);
+  const handlePopulate = async () => {
+    setLoading('populate');
     setError(null);
 
     try {
-      await operation();
+      await populateDatabase();
     } catch (err) {
-      const firebaseError = toFirebaseError(err, operationName);
-      setError(
-        `${operationName} ${t('databaseStagingPanel.errors.operationFailed')}: ${firebaseError.getUserMessage()}`
-      );
+      const error = normalizeFirebaseAuthError(err, SIGNUP_ERRORS);
+      const message = error.type === 'unknown' ? error.message : error.type;
+      setError(`${t('databaseStagingPanel.errors.operationFailed')}: ${message}`);
     } finally {
       setLoading(null);
     }
@@ -122,20 +116,14 @@ export const DatabaseStagingPanelScreen = () => {
               </Text>
 
               <View className="gap-md">
-                <Button
-                  title={t('databaseStagingPanel.populateDatabase')}
-                  loading={loading === 'populateDatabase'}
-                  disabled={!!loading}
-                  onPress={() => handleOperation(populateDatabase, 'populateDatabase')}
-                />
-
-                <Button
-                  title={t('databaseStagingPanel.clearDatabase')}
-                  mode="destructive"
-                  loading={loading === 'clearDatabase'}
-                  disabled={!!loading}
-                  onPress={() => handleOperation(clearDatabase, 'clearDatabase')}
-                />
+                {dbStatus !== 'populated' && (
+                  <Button
+                    title={t('databaseStagingPanel.populateDatabase')}
+                    loading={loading === 'populate'}
+                    disabled={!!loading}
+                    onPress={handlePopulate}
+                  />
+                )}
               </View>
             </View>
 

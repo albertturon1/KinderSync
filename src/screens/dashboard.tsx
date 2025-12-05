@@ -7,12 +7,21 @@ import { Text } from '@/components/ui/text';
 
 export const DashboardScreen = () => {
   const { t } = useTranslation();
-  const { logout } = useAuth();
+  const { signOut } = useAuth();
+
+  const handleLogout = async () => {
+    const result = await signOut();
+    if (!result.success) {
+      // eslint-disable-next-line no-console
+      console.error('Logout failed:', result.error);
+    }
+  };
+
   return (
     <SafeScreen>
       <ScreenPadding>
         <Text>{t('dashboard.title')}</Text>
-        <Button title={t('dashboard.logOut')} onPress={logout} />
+        <Button title={t('dashboard.logOut')} onPress={handleLogout} />
       </ScreenPadding>
     </SafeScreen>
   );

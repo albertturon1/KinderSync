@@ -2,26 +2,27 @@ import React, { useState } from 'react';
 import { View, Pressable, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { RootStackProps } from '@/types/INavigation';
-import { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui/button';
 import { SafeScreen } from '@/components/ui/safe-screen';
 import { ScreenPadding } from '@/components/ui/screen-padding';
 import { Input } from '@/components/ui/input';
-import { toFirebaseError } from '@/lib/firebase/errors';
+import { useAuth } from '@/components/root/auth-provider';
 
 // TODO: add forms library to simplify state
-export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
+export const SignInScreen = ({ navigation }: RootStackProps<'SignIn'>) => {
   const { t } = useTranslation();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      setError(t('auth.login.errors.fillAllFields'));
+  const isFormValid = !!email && !!password && password.length >= 6;
+  const handleSignIn = async () => {
+    if (!isFormValid) {
+      setError(t('auth.signIn.errors.fillAllFields'));
       return;
     }
 
@@ -29,20 +30,21 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
     setError(null);
 
     try {
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      const firebaseError = toFirebaseError(error, 'login');
-      setError(firebaseError.getUserMessage());
+      const result = await signIn(email, password);
+      if (!result.success) {
+        setError(result.error.userMessage);
+        return;
+      }
+    } catch {
+      setError(t('auth.signIn.errors.signInFailed'));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const isFormValid = !!email && !!password && password.length >= 6;
 
   return (
-    <SafeScreen header={{ title: t('auth.login.title') }}>
+    <SafeScreen header={{ title: t('auth.signIn.title') }}>
       <ScreenPadding>
         <ScrollView
           bounces={false}
@@ -50,16 +52,16 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
           showsVerticalScrollIndicator={false}>
           <View className="gap-6">
             <Text size="body" className="text-muted-foreground">
-              {t('auth.login.subtitle')}
+              {t('auth.signIn.subtitle')}
             </Text>
 
             <View className="gap-2">
               <Text size="label" weight="semibold">
-                {t('auth.login.email')}
+                {t('auth.signIn.email')}
               </Text>
               <Input
                 className="border rounded-lg p-4"
-                placeholder={t('auth.login.emailPlaceholder')}
+                placeholder={t('auth.signIn.emailPlaceholder')}
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
@@ -70,12 +72,12 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
 
             <View className="gap-2">
               <Text size="label" weight="semibold">
-                {t('auth.login.password')}
+                {t('auth.signIn.password')}
               </Text>
               <View className="flex-row items-center relative">
                 <Input
                   className="border rounded-lg p-4 flex-1"
-                  placeholder={t('auth.login.passwordPlaceholder')}
+                  placeholder={t('auth.signIn.passwordPlaceholder')}
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword}
@@ -98,28 +100,28 @@ export const LoginScreen = ({ navigation }: RootStackProps<'Login'>) => {
 
               {password && password.length < 6 && (
                 <Text size="caption" className="text-destructive text-center">
-                  {t('auth.login.errors.passwordTooShort')}
+                  {t('auth.signIn.errors.passwordTooShort')}
                 </Text>
               )}
             </View>
 
             <Button
-              title={isLoading ? t('auth.login.signingIn') : t('auth.login.signIn')}
+              title={isLoading ? t('auth.signIn.signingIn') : t('auth.signIn.signIn')}
               loading={isLoading}
               disabled={!isFormValid}
-              onPress={handleLogin}
+              onPress={handleSignIn}
             />
 
             <View className="flex-row justify-center items-center">
               <Text size="caption" className="text-muted-foreground">
-                {t('auth.login.noAccount')}&nbsp;
+                {t('auth.signIn.noAccount')}&nbsp;
               </Text>
               <Pressable
                 onPress={() => {
-                  navigation.navigate('Register');
+                  navigation.navigate('SignUp');
                 }}>
                 <Text size="caption" weight="semibold" className="text-primary">
-                  {t('auth.login.createAccount')}
+                  {t('auth.signIn.createAccount')}
                 </Text>
               </Pressable>
             </View>

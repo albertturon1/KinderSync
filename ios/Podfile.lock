@@ -1,7 +1,7 @@
 PODS:
   - EXConstants (18.0.10):
     - ExpoModulesCore
-  - Expo (54.0.25):
+  - Expo (54.0.26):
     - ExpoModulesCore
     - hermes-engine
     - RCTRequired
@@ -36,7 +36,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLocalization (17.0.7):
     - ExpoModulesCore
-  - ExpoModulesCore (3.0.26):
+  - ExpoModulesCore (3.0.27):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1906,7 +1906,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - RNReanimated (4.1.5):
+  - RNReanimated (4.1.6):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1928,10 +1928,10 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
-    - RNReanimated/reanimated (= 4.1.5)
+    - RNReanimated/reanimated (= 4.1.6)
     - RNWorklets
     - Yoga
-  - RNReanimated/reanimated (4.1.5):
+  - RNReanimated/reanimated (4.1.6):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1953,10 +1953,10 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
-    - RNReanimated/reanimated/apple (= 4.1.5)
+    - RNReanimated/reanimated/apple (= 4.1.6)
     - RNWorklets
     - Yoga
-  - RNReanimated/reanimated/apple (4.1.5):
+  - RNReanimated/reanimated/apple (4.1.6):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2381,13 +2381,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   EXConstants: fd688cef4e401dcf798a021cfb5d87c890c30ba3
-  Expo: c347cdb69706ea3de83da97ce956042aafd8e62a
+  Expo: bdc609f18fd5b7250cd8109787cf719a2c5d2463
   ExpoAsset: d839c8eae8124470332408427327e8f88beb2dfd
   ExpoFileSystem: 77157a101e03150a4ea4f854b4dd44883c93ae0a
   ExpoFont: cf9d90ec1d3b97c4f513211905724c8171f82961
   ExpoKeepAwake: 1a2e820692e933c94a565ec3fbbe38ac31658ffe
   ExpoLocalization: b852a5d8ec14c5349c1593eca87896b5b3ebfcca
-  ExpoModulesCore: 9460546192590b0ed13493d9b01bed256d3440b0
+  ExpoModulesCore: 665178814f1556ca4c6ee34e3ad5db6cb9155d36
   FBLazyVector: e95a291ad2dadb88e42b06e0c5fb8262de53ec12
   Firebase: f07b15ae5a6ec0f93713e30b923d9970d144af3e
   FirebaseAnalytics: 0fc2b20091f0ddd21bf73397cf8f0eb5346dc24f
@@ -2478,7 +2478,7 @@ SPEC CHECKSUMS:
   RNFBAuth: 7123a71a1fc8dec4aa4e6cb656562661b3ece9f7
   RNFBDatabase: 1a476166a6b556fe12b3994ba63ecc53d151b391
   RNGestureHandler: 13d6f24b3bc99e557f48318402edf10b0bc535e0
-  RNReanimated: 2a5413dfcf429c7c9ce3f0030e3b7a010c2f9565
+  RNReanimated: 8315d083516a6690fcdb479b56fca8fabf65a73d
   RNScreens: 33bbd1d0f86ed957557620dc94054b71db0a94ee
   RNWorklets: 76fce72926e28e304afb44f0da23b2d24f2c1fa0
   Yoga: 65431d43277b661ebc7289c6c5d82f64ce42cfe0

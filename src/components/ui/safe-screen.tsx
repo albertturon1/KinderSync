@@ -20,7 +20,7 @@ interface SafeScreenProps {
 }
 
 export const SafeScreen = ({ children, header }: SafeScreenProps) => {
-  const shouldShowHeader = !!header;
+  const shouldShowHeader = !!header && Platform.OS  !== 'web';
   const showBack = header?.showBack !== false;
   const backgroundColor = useCSSVariable('--color-background') as string;
 
@@ -30,9 +30,9 @@ export const SafeScreen = ({ children, header }: SafeScreenProps) => {
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        {shouldShowHeader && (
-          <Header title={header?.title} rightElement={header?.right} hideArrow={!showBack} />
-        )}
+          {shouldShowHeader && (
+            <Header title={header?.title} rightElement={header?.right} hideArrow={!showBack} />
+          )}
         <View className="flex-1">{children}</View>
       </KeyboardAvoidingView>
     </SafeAreaView>
